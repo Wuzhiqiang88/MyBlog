@@ -1,0 +1,124 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>帐号注册</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+    <link href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" rel="stylesheet" type="text/css">
+    <link href="//cdn.bootcss.com/bootstrap-validator/0.5.3/css/bootstrapValidator.min.css" rel="stylesheet">
+    <link href="../../css/templatemo_style.css" rel="stylesheet" type="text/css">
+</head>
+<body class="templatemo-bg-gray">
+<div class="container">
+    <div class="col-md-12">
+        <h1 class="margin-bottom-15">Wiliwili博客</h1>
+        <form id="registerForm" class="form-horizontal templatemo-container templatemo-login-form-1 margin-bottom-30"
+              role="form" action="/register" th:action="@{/register}" method="post">
+            <h3>帐号注册</h3>
+            <br>
+            <div class="form-group">
+                <div class="col-xs-12">
+                    <div class="input-group margin-bottom-sm">
+                        <span class="input-group-addon"><i class="fa fa-user fa-fw"></i></span>
+                        <input  onfocus="clearError()" type="text" class="form-control"
+                               name="username" id="username" placeholder="输入用户名">
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-xs-12">
+                    <div class="input-group margin-bottom-sm">
+                        <span class="input-group-addon"><i class="fa fa-envelope-o fa-fw"></i></span>
+                        <input  onfocus="clearError()" type="email" class="form-control"
+                               name="email" id="email" placeholder="输入邮箱地址">
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-md-12">
+                    <div class="input-group">
+                        <span class="input-group-addon"><i class="fa fa-lock fa-fw"></i></span>
+                        <input  onfocus="clearError()" type="password" class="form-control"
+                               name="password" id="password" placeholder="输入密码">
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-md-12">
+                    <div class="input-group">
+                        <span class="input-group-addon"><i class="fa fa-key fa-fw"></i></span>
+                        <input onfocus="clearError()" type="password" class="form-control"
+                               id="password_confirm" name="repeatPassword" placeholder="输入确认密码">
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-4">
+                        <input type="text" class="kaptcha-input" id="tryCode" name="tryCode" placeholder="输入验证码">
+                </div>
+                <div class="col-md-3">
+                        <img id="codImg" alt="验证码" onclick = "this.src='/defaultKaptcha?d='+new Date()*1" src="/defaultKaptcha" />
+                </div>
+                <div class="col-md-5">
+                    <a onclick="changeImg()">看不清？换一张</a>
+                </div>
+                <input type="hidden" id="error" th:value="${loginError}" th:data-error-msg="${errorMsg}">
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-12">
+                    <label><input type="checkbox" checked>我同意 <a href="javascript:;" data-toggle="modal" data-target="#templatemo_modal">wiliwili博客协议</a> 条款</label>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-md-12">
+                    <input type="submit" value="立即注册" class="btn btn-success pull-right">
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<div class="footer-div"></div>
+<footer class="login-footer">
+    <p>Copyright © 2018-2019 | 赣ICP备18008140号-1</p>
+</footer>
+<!-- Modal -->
+<div class="modal fade" id="templatemo_modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span
+                        class="sr-only">Close</span></button>
+                <h4 class="modal-title" id="myModalLabel">Wiliwili of Service</h4>
+            </div>
+            <div class="modal-body">
+                <p>This form is provided by SAO that can be used for your websites. Cras mattis consectetur purus sit
+                    amet fermentum. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Morbi leo risus, porta
+                    ac consectetur ac, vestibulum at eros.</p>
+                <p>Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Vivamus sagittis lacus vel augue
+                    laoreet rutrum faucibus dolor auctor. Aenean lacinia bibendum nulla sed consectetur. Praesent
+                    commodo cursus magna, vel scelerisque nisl consectetur et. Donec sed odio dui. Donec ullamcorper
+                    nulla non metus auctor fringilla. Cras mattis consectetur purus sit amet fermentum. Cras justo odio,
+                    dapibus ac facilisis in, egestas eget quam.</p>
+                <p>Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Praesent commodo cursus magna, vel
+                    scelerisque nisl consectetur et. Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor
+                    auctor.</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- jQuery文件。务必在bootstrap.min.js 之前引入 -->
+<script src="https://cdn.bootcss.com/jquery/3.1.1/jquery.min.js"></script>
+<!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
+<script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script src="//cdn.bootcss.com/bootstrap-validator/0.5.3/js/bootstrapValidator.min.js"></script>
+<script src="../../js/register.js"></script>
+</body>
+</html>

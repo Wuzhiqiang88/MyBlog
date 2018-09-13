@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>账号设置-Wiliwili博客</title>
+    <div th:replace="~{fragments/header :: header}"></div>
+</head>
+<body>
+
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-3">
+            <div class="panel panel-default">
+
+                <ul class="list-group">
+                    <a href="#userInfo" data-toggle="tab" class="list-group-item">
+                        个人资料
+                    </a>
+                    <a href="#changePassword" data-toggle="tab" class="list-group-item" title="waylau">
+                        修改密码
+                    </a>
+                    <a href="" class="list-group-item">
+                        我的收藏
+                    </a>
+                    <a href="" class="list-group-item">
+                        我的关注
+                    </a>
+                    <a href="" class="list-group-item">
+                        我的粉丝
+                    </a>
+                </ul>
+            </div>
+        </div>
+        <div class="col-md-9">
+            <div id="myTabContent" class="tab-content">
+                <div class="tab-pane fade in active" id="userInfo">
+                    <div class="panel panel-default">
+                        <div class="panel-body">
+                            <div class="mypage-header">
+                                <h3>个人资料</h3>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <div class="col-md-12" style="text-align: center">
+                                        <a id="changeAvatar-a" data-toggle="modal" data-target="#flipFlop" role="button"
+                                           th:data-username="${userModel.user.username}">
+                                            <img id="avatar" th:src="${userModel.user.avatar}" class="blog-avatar blog-avatar-50-l">
+                                        </a>
+                                    </div>
+                                    <div class="col-md-12" style="text-align: center;margin-top: 10px">
+                                        <a id="changeAvatar-a2" data-toggle="modal" data-target="#flipFlop" role="button">修改头像</a>
+                                    </div>
+
+                                </div>
+                                <div class="col-md-9">
+                                    <p style="color: #999"><span>用户名&nbsp;:</span>&nbsp;<span
+                                            th:text="${userModel.user.username}">nike</span></p>
+                                    <hr>
+                                    <div class="pull-right">
+                                        <a style="color: #157dcf;cursor: pointer" data-toggle="modal"
+                                           data-target="#myModal">修改资料</a>
+                                    </div>
+                                    <p><span>昵称&nbsp;:</span>&nbsp;<span th:text="${userModel.user.nick}">nike</span>
+                                    </p>
+                                    <p><span>邮箱&nbsp;:</span>&nbsp;<span
+                                            th:text="${userModel.user.email}">123@qq.com</span>
+                                    </p>
+                                    <p><span>性别&nbsp;:</span>&nbsp;<span>男</span></p>
+                                    <p><span>生日&nbsp;:</span>&nbsp;<span></span></p>
+                                    <p><span>地区&nbsp;:</span>&nbsp;<span>中国</span></p>
+                                    <p><span>行业&nbsp;:</span>&nbsp;<span></span></p>
+                                    <p><span>职位&nbsp;:</span>&nbsp;<span></span></p>
+                                    <p><span>简介&nbsp;:</span>&nbsp;<span>这个人很懒，什么都没留下</span></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="tab-pane fade" id="changePassword">
+                    <div class="panel panel-default">
+                        <div class="panel-body">
+                            <div class="mypage-header">
+                                <h3>修改密码</h3>
+                            </div>
+                            <div class="row">
+                                <form th:action="'/u/'+${userModel.user.username}+'/changePwd'" method="post"
+                                      class="form-horizontal" role="form" id="changePwdForm">
+                                    <div class="form-group">
+                                        <label class="col-sm-5 control-label">输入新密码:</label>
+                                        <div class="col-sm-3">
+                                            <input type="password" class="form-control" name="password">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-sm-5 control-label">确认新密码:</label>
+                                        <div class="col-sm-3">
+                                            <input type="password" name="repeatPassword" class="form-control">
+                                        </div>
+                                    </div>
+                                    <div class="form-group" style="text-align: center;margin-top: 30px">
+                                        <button type="submit" class="btn btn-default">确认</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div th:replace="~{fragments/footer :: footer}">...</div>
+<!-- 模态框（Modal） -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                    &times;
+                </button>
+                <h4 class="modal-title">
+                    修改资料
+                </h4>
+            </div>
+            <div class="modal-body">
+                <form class="form-horizontal" role="form" id="userForm"
+                      th:action="'/u/'+${userModel.user.username}+'/profile'" method="post">
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">用户名:</label>
+                        <div class="col-sm-5">
+                            <input type="text" class="form-control" id="username" th:value="${userModel.user.username}"
+                                   readonly="readonly">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">昵称:</label>
+                        <div class="col-sm-5">
+                            <input type="text" class="form-control" id="nick" name="nick"
+                                   placeholder="请输入昵称" th:value="${userModel.user.nick}">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="email" class="col-sm-2 control-label">Email:</label>
+                        <div class="col-sm-5">
+                            <input class="form-control" id="email" name="email" type="email"
+                                   th:value="${userModel.user.email}">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">性别:</label>
+                        <div class="col-sm-3">
+                            <select class="form-control">
+                                <option>男</option>
+                                <option>女</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">生日:</label>
+                        <div class="col-sm-5">
+                            <div class="input-group date" id='date1'>
+                                <input type="text" class="form-control">
+                                <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">地区:</label>
+                        <div class="col-sm-5">
+                            <input type="text" class="form-control">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">职位:</label>
+                        <div class="col-sm-5">
+                            <input type="text" class="form-control">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">简介:</label>
+                        <div class="col-sm-10">
+                            <textarea class="form-control" rows="3"></textarea>
+                        </div>
+                    </div>
+                    <div style="text-align:right; ">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">关闭
+                        </button>
+                        <button type="submit" class="btn btn-primary">
+                            提交更改
+                        </button>
+                    </div>
+                </form>
+
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal -->
+</div>
+
+
+<!-- The modal -->
+<div class="modal fade" id="flipFlop" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                    &times;
+                </button>
+                <h4 class="modal-title">
+                    修改头像
+                </h4>
+            </div>
+            <div class="modal-body">
+                <div class="Avatarcontainer">
+                    <div style="float: left">
+                        <div class="imageBox">
+                            <div class="thumbBox"></div>
+                            <div class="spinner" style="display: none">Loading...</div>
+                        </div>
+                        <span class="btn btn-success fileinput-button">
+                            <span>上传头像</span>
+                            <input type="file" name="upload-file" id="upload-file">
+                        </span>
+                        <input type="button" id="btnCrop" class="btn btn-info" value="裁切">
+                        <input type="button" id="btnZoomIn" class="btn btn-info" value="+">
+                        <input type="button" id="btnZoomOut" class="btn btn-info" value="-">
+
+                    </div>
+                    <div style="float: left">
+                        <div class="cropped"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-primary" data-dismiss="modal" id="submitEditAvatar">提交</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">关闭</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
